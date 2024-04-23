@@ -7,7 +7,7 @@ const logger = (req, res, next) => {
 };
 const authorize = (req, res, next) => {
   const { user } = req.query;
-
+  console.log("from logger");
   if (user == "rasheed") {
     req.user = { name: "rasheed", age: 25 };
     return next();
@@ -16,4 +16,8 @@ const authorize = (req, res, next) => {
   return res.send("Un Authorize");
 };
 
-module.exports = { logger, authorize };
+const notfound = (req, res, next) => {
+  res.send("not found");
+};
+
+module.exports = { logger, authorize, notfound };
