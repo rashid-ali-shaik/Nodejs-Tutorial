@@ -2,10 +2,11 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 
-// const { logger, authorize } = require("./middlewareFunc");
+const { logger, authorize } = require("./middlewareFunc");
 //to avoid repeating adding Middleware to each route we use app.use it apply for all;
-app.use(morgan("tiny"));
+// app.use(morgan("tiny"));
 
+app.use([logger, authorize]);
 app.get("/", (req, res) => {
   res.send("Home page ");
 });
