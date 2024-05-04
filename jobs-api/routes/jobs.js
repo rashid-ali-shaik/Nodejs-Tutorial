@@ -9,7 +9,7 @@ const {
 
 const router = express.Router();
 
-router.route("/").get(getAllJobs).get(getJob).post(createJob);
-router.route("/:id").patch(updateJob).delete(deleteJob);
+router.route("/").get(getAllJobs).post(createJob);
+router.route("/:id").patch(updateJob).delete(deleteJob).get(getJob);
 
 module.exports = router;

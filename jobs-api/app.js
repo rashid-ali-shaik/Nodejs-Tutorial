@@ -4,6 +4,7 @@ const notFoundMiddleware = require("./middlewares/not-found");
 const errorhandlerMiddleware = require("./middlewares/Error");
 const morgan = require("morgan");
 require("dotenv").config();
+const Authorization = require("./middlewares/Authorization");
 
 const connectDB = require("./db/connect");
 
@@ -18,7 +19,7 @@ app.use(morgan("tiny"));
 app.use(express.json());
 //routes
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/jobs", jobsRouter);
+app.use("/api/v1/jobs", Authorization, jobsRouter);
 
 //middlewares
 app.use(errorhandlerMiddleware);
