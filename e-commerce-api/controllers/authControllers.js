@@ -1,7 +1,7 @@
 const UserModel = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
-const { attachCookiesToResponse } = require("../utils");
+const { attachCookiesToResponse, createUserToken } = require("../utils");
 
 //REGISTER
 const register = async (req, res) => {
@@ -16,7 +16,7 @@ const register = async (req, res) => {
 
   const user = await UserModel.create({ name, email, password });
 
-  const tokenUser = { name: user.name, role: user.role, userId: user._id };
+  const tokenUser = createUserToken(user);
   attachCookiesToResponse({ res, user: tokenUser });
 
   res.status(StatusCodes.CREATED).json({ user: tokenUser });
@@ -44,7 +44,7 @@ const login = async (req, res) => {
   }
 
   // attaching the cookies after all validations
-  const tokenUser = { name: user.name, role: user.role, userId: user._id };
+  const tokenUser = createUserToken(user);
   attachCookiesToResponse({ res, user: tokenUser });
   res.status(StatusCodes.CREATED).json({ user: tokenUser });
 };

@@ -31,6 +31,13 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre("save", async function () {
+  //To check the modified paths
+  // console.log(this.modifiedPaths());
+  // console.log(this.isModified("name"));
+  // console.log(this.isModified("password"));
+
+  //if we didn't check this the hashing will run again password will change.
+  if (!this.isModified("password")) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
